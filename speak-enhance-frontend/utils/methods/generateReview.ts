@@ -1,11 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import config from "@/geminiConfig";
 
-const promptAI = async (prompt: string, conversation: string[]) => {
+const generateReview = async (conversation: string[]) => {
   // GoogleGenerativeAI required config
   const configuration = new GoogleGenerativeAI(config.apiKey);
 
   // Model initialization
+  // @ts-ignore
   const model = configuration.getGenerativeModel({ model: config.modelId });
 
   //These arrays are to maintain the history of the conversation
@@ -19,17 +20,19 @@ const promptAI = async (prompt: string, conversation: string[]) => {
   }
 
   const chat = model.startChat({
-    history: currentMessages,
+    history: [],
     generationConfig: {
       maxOutputTokens: 100,
     },
   });
 
-  const result = await chat.sendMessage(prompt);
+  const result = await chat.sendMessage(
+    config.reviewPrompt + "\n" + JSON.stringify(currentMessages)
+  );
   const response = await result.response;
   const responseText = response.text();
 
   return responseText;
 };
 
-export default promptAI;
+export default generateReview;
