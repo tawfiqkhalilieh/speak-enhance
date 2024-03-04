@@ -3,7 +3,7 @@
   margin: 20px auto;
   width: 140px;
   height: 45px;
-  margin-top: 30%;
+  margin-top: 25%;
   font-size: 15px;
   text-transform: uppercase;
   letter-spacing: 2.5px;
@@ -16,6 +16,7 @@
   transition: all 0.3s ease 0s;
   cursor: pointer;
   outline: none;
+  bottom: 0;
 }
 
 .button:hover {
